@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RetroVerse — Tienda Vintage Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #F5E6C8; --parchment: #EDD9A3; --light-cream: #FDF6E3;
+      --brown-dark: #2C1A0E; --brown-mid: #5C3D1E; --brown-saddle: #8B4513;
+      --amber: #D4A017; --amber-light: #F0C040; --sepia: #704214; --rust: #A0522D;
+      --text-dark: #2C1A0E; --text-mid: #5C3D1E;
+      --border-color: #C4A882; --card-bg: #FDF6E3; --shadow: rgba(44,26,14,0.15);
+    }
+    body { font-family:'Crimson Text',Georgia,serif; background:var(--cream); color:var(--text-dark); min-height:100vh; }
+
+    /* ── HEADER ── */
+    header { background:var(--brown-dark); border-bottom:3px solid var(--amber); padding:0 2rem; position:sticky; top:0; z-index:100; }
+    .header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:1.25rem; height:70px; flex-wrap:wrap; }
+    .logo { display:flex; align-items:center; gap:.6rem; text-decoration:none; flex-shrink:0; }
+    .logo svg { width:40px; height:40px; }
+    .logo-text { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:900; color:var(--amber); letter-spacing:2px; line-height:1; }
+    .logo-text span { display:block; font-size:.55rem; font-weight:400; letter-spacing:4px; color:var(--parchment); font-family:'Crimson Text',serif; margin-top:2px; }
+    .search-bar { flex:1; position:relative; max-width:360px; }
+    .search-bar input { width:100%; padding:.5rem 1rem .5rem 2.2rem; background:rgba(255,255,255,.1); border:1px solid var(--amber); border-radius:2px; color:var(--cream); font-family:'Crimson Text',serif; font-size:.95rem; outline:none; }
+    .search-bar input::placeholder { color:rgba(245,230,200,.45); }
+    .search-bar input:focus { background:rgba(255,255,255,.15); }
+    .search-icon { position:absolute; left:.65rem; top:50%; transform:translateY(-50%); color:var(--amber); font-size:.85rem; }
+    nav { display:flex; gap:1.25rem; margin-left:auto; }
+    nav a { color:var(--parchment); text-decoration:none; font-family:'Crimson Text',serif; font-size:.95rem; letter-spacing:.5px; transition:color .2s; }
+    nav a:hover { color:var(--amber); }
+    .cart-btn { background:var(--amber); border:none; border-radius:2px; padding:.5rem 1rem; color:var(--brown-dark); font-family:'Playfair Display',serif; font-size:.82rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:.45rem; transition:background .2s; flex-shrink:0; }
+    .cart-btn:hover { background:var(--amber-light); }
+    .cart-badge { background:var(--brown-dark); color:var(--amber); border-radius:50%; width:18px; height:18px; font-size:.65rem; display:flex; align-items:center; justify-content:center; font-weight:700; }
+
+    /* ── HERO ── */
+    .hero { background:linear-gradient(135deg,var(--brown-dark) 0%,var(--sepia) 55%,var(--brown-mid) 100%); position:relative; overflow:hidden; padding:5rem 2rem; text-align:center; border-bottom:4px solid var(--amber); }
+    .hero::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(212,160,23,.04) 20px,rgba(212,160,23,.04) 40px); }
+    .hero-tag { font-family:'Special Elite',monospace; font-size:.72rem; letter-spacing:5px; color:var(--amber); margin-bottom:1rem; text-transform:uppercase; position:relative; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,6vw,4.4rem); font-weight:900; color:var(--cream); line-height:1.1; margin-bottom:1rem; position:relative; }
+    .hero h1 em { font-style:italic; color:var(--amber); }
+    .hero-sub { font-size:1.15rem; color:var(--parchment); max-width:480px; margin:0 auto 2rem; line-height:1.6; font-style:italic; position:relative; }
+    .hero-cta { display:inline-block; padding:.85rem 2.5rem; background:var(--amber); color:var(--brown-dark); font-family:'Playfair Display',serif; font-size:.95rem; font-weight:700; letter-spacing:2px; text-decoration:none; border:2px solid var(--amber); transition:all .3s; cursor:pointer; border-radius:2px; position:relative; }
+    .hero-cta:hover { background:transparent; color:var(--amber); }
+    .hero-divider { display:flex; justify-content:center; gap:.5rem; margin-top:1.75rem; }
+    .hero-divider span { width:4px; height:4px; border-radius:50%; background:var(--amber); opacity:.5; }
+    .hero-divider span:nth-child(2) { opacity:.8; }
+    .hero-divider span:nth-child(3) { opacity:1; }
+
+    /* ── STATS ── */
+    .stats-bar { background:var(--brown-mid); padding:.75rem 2rem; border-bottom:2px solid var(--border-color); }
+    .stats-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:center; gap:3rem; flex-wrap:wrap; }
+    .stat { text-align:center; }
+    .stat-num { font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700; color:var(--amber); display:block; }
+    .stat-label { font-family:'Special Elite',monospace; font-size:.7rem; letter-spacing:1px; color:var(--parchment); }
+
+    /* ── MAIN ── */
+    main { max-width:1200px; margin:0 auto; padding:2rem; }
+    .section-title { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:700; color:var(--brown-dark); margin-bottom:1.5rem; display:flex; align-items:center; gap:1rem; }
+    .section-title::after { content:''; flex:1; height:1px; background:var(--border-color); }
+
+    /* ── FILTERS ── */
+    .filters { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .filter-btn { padding:.45rem 1.1rem; border:1.5px solid var(--border-color); background:transparent; border-radius:2px; font-family:'Crimson Text',serif; font-size:.92rem; color:var(--text-mid); cursor:pointer; transition:all .2s; letter-spacing:.3px; }
+    .filter-btn:hover,.filter-btn.active { background:var(--brown-dark); border-color:var(--brown-dark); color:var(--amber); }
+
+    /* ── PRODUCT GRID ── */
+    .products-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:1.5rem; }
+    .product-card { background:var(--card-bg); border:1px solid var(--border-color); border-radius:3px; overflow:hidden; cursor:pointer; transition:all .3s; box-shadow:0 2px 8px var(--shadow); animation:fadeIn .4s ease forwards; position:relative; }
+    .product-card:hover { transform:translateY(-4px); box-shadow:0 10px 28px var(--shadow); border-color:var(--amber); }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    .badge-decade { position:absolute; top:.7rem; right:.7rem; background:var(--brown-dark); color:var(--amber); font-family:'Special Elite',monospace; font-size:.65rem; padding:.18rem .45rem; letter-spacing:1px; border-radius:1px; }
+    .badge-exclusive { position:absolute; top:.7rem; left:.7rem; background:var(--amber); color:var(--brown-dark); font-family:'Special Elite',monospace; font-size:.62rem; padding:.18rem .45rem; letter-spacing:1px; border-radius:1px; font-weight:700; }
+    .product-image { height:175px; background:linear-gradient(135deg,var(--parchment) 0%,var(--cream) 100%); display:flex; align-items:center; justify-content:center; font-size:4.8rem; border-bottom:1px solid var(--border-color); position:relative; overflow:hidden; }
+    .product-image::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(0,0,0,.018),rgba(0,0,0,.018) 1px,transparent 1px,transparent 4px); pointer-events:none; }
+    .product-info { padding:.9rem; }
+    .product-code { font-family:'Special Elite',monospace; font-size:.7rem; color:var(--rust); letter-spacing:1.5px; margin-bottom:.2rem; }
+    .product-name { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--text-dark); margin-bottom:.45rem; line-height:1.3; }
+    .product-condition { font-size:.8rem; color:var(--text-mid); margin-bottom:.7rem; display:flex; align-items:center; gap:.3rem; }
+    .cond-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .cond-Excelente { background:#4CAF50; } .cond-Muy-Bueno { background:#8BC34A; }
+    .cond-Bueno { background:#FFC107; } .cond-Aceptable { background:#FF9800; }
+    .cond-Para-restaurar { background:#F44336; }
+    .product-footer { display:flex; align-items:center; justify-content:space-between; margin-top:.7rem; padding-top:.7rem; border-top:1px solid var(--border-color); }
+    .product-price { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--brown-saddle); }
+    .product-price-label { font-size:.65rem; color:var(--text-mid); display:block; font-style:italic; }
+    .add-btn { padding:.42rem .9rem; background:var(--brown-dark); color:var(--amber); border:none; border-radius:2px; font-family:'Special Elite',monospace; font-size:.7rem; cursor:pointer; letter-spacing:.8px; transition:all .2s; }
+    .add-btn:hover { background:var(--brown-saddle); }
+    .add-btn.added { background:var(--amber); color:var(--brown-dark); cursor:default; }
+
+    /* ── MODAL ── */
+    .modal-overlay { position:fixed; inset:0; background:rgba(44,26,14,.72); z-index:200; display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; pointer-events:none; transition:opacity .3s; backdrop-filter:blur(3px); }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+    .modal { background:var(--card-bg); border:1px solid var(--border-color); border-radius:4px; max-width:640px; width:100%; max-height:90vh; overflow-y:auto; position:relative; transform:scale(.95); transition:transform .3s; box-shadow:0 24px 64px rgba(0,0,0,.45); }
+    .modal-overlay.open .modal { transform:scale(1); }
+    .modal-header { background:var(--brown-dark); padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--amber); }
+    .modal-header h3 { font-family:'Special Elite',monospace; color:var(--amber); font-size:.95rem; letter-spacing:2px; }
+    .modal-close { background:none; border:none; color:var(--parchment); font-size:1.2rem; cursor:pointer; padding:0 .25rem; }
+    .modal-close:hover { color:var(--amber); }
+    .modal-body { padding:1.5rem; }
+    .modal-image { height:195px; background:linear-gradient(135deg,var(--parchment),var(--cream)); display:flex; align-items:center; justify-content:center; font-size:5.5rem; border-radius:3px; margin-bottom:1.25rem; border:1px solid var(--border-color); position:relative; overflow:hidden; }
+    .modal-image::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(0,0,0,.015),rgba(0,0,0,.015) 1px,transparent 1px,transparent 4px); }
+    .modal-meta { display:flex; gap:.75rem; flex-wrap:wrap; margin-bottom:.9rem; }
+    .meta-tag { background:var(--brown-dark); color:var(--amber); font-family:'Special Elite',monospace; font-size:.67rem; padding:.18rem .55rem; letter-spacing:1px; border-radius:1px; }
+    .modal-name { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:var(--brown-dark); margin-bottom:.45rem; line-height:1.3; }
+    .modal-desc { font-size:.97rem; color:var(--text-mid); line-height:1.7; margin-bottom:1.25rem; font-style:italic; }
+    .modal-details { background:var(--cream); border:1px solid var(--border-color); padding:.9rem 1rem; border-radius:2px; margin-bottom:1.25rem; }
+    .detail-row { display:flex; justify-content:space-between; padding:.35rem 0; border-bottom:1px solid var(--border-color); font-size:.93rem; align-items:center; }
+    .detail-row:last-child { border-bottom:none; }
+    .detail-label { font-family:'Special Elite',monospace; font-size:.68rem; color:var(--text-mid); letter-spacing:1.2px; }
+    .detail-value { color:var(--text-dark); font-weight:600; }
+    .modal-purchase { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+    .modal-price { font-family:'Playfair Display',serif; font-size:1.7rem; font-weight:900; color:var(--brown-saddle); }
+    .modal-price small { font-size:.85rem; font-weight:400; color:var(--text-mid); display:block; font-style:italic; font-family:'Crimson Text',serif; }
+    .modal-add-btn { padding:.75rem 2rem; background:var(--amber); color:var(--brown-dark); border:none; border-radius:2px; font-family:'Playfair Display',serif; font-size:.95rem; font-weight:700; cursor:pointer; letter-spacing:1px; transition:all .2s; }
+    .modal-add-btn:hover { background:var(--amber-light); }
+
+    /* ── CART SIDEBAR ── */
+    .cart-overlay { position:fixed; inset:0; background:rgba(44,26,14,.5); z-index:150; opacity:0; pointer-events:none; transition:opacity .3s; }
+    .cart-overlay.open { opacity:1; pointer-events:all; }
+    .cart-sidebar { position:fixed; top:0; right:-400px; width:min(390px,100vw); height:100vh; background:var(--card-bg); border-left:2px solid var(--amber); z-index:160; transition:right .3s ease; display:flex; flex-direction:column; box-shadow:-8px 0 32px rgba(0,0,0,.35); }
+    .cart-sidebar.open { right:0; }
+    .cart-header { background:var(--brown-dark); padding:1.1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--amber); }
+    .cart-header h3 { font-family:'Playfair Display',serif; color:var(--amber); font-size:1rem; letter-spacing:2px; }
+    .cart-close-btn { background:none; border:none; color:var(--parchment); font-size:1.2rem; cursor:pointer; }
+    .cart-close-btn:hover { color:var(--amber); }
+    .cart-items { flex:1; overflow-y:auto; padding:1rem; }
+    .cart-empty { text-align:center; padding:3rem 1rem; color:var(--text-mid); }
+    .cart-empty-icon { font-size:2.8rem; margin-bottom:.75rem; }
+    .cart-empty p { font-family:'Playfair Display',serif; font-size:1rem; font-style:italic; }
+    .cart-item { display:flex; gap:.7rem; padding:.7rem 0; border-bottom:1px solid var(--border-color); align-items:center; }
+    .cart-item-emoji { font-size:1.9rem; width:48px; height:48px; background:var(--cream); border:1px solid var(--border-color); display:flex; align-items:center; justify-content:center; border-radius:2px; flex-shrink:0; }
+    .cart-item-info { flex:1; }
+    .cart-item-name { font-family:'Playfair Display',serif; font-size:.88rem; font-weight:700; color:var(--text-dark); line-height:1.3; margin-bottom:.15rem; }
+    .cart-item-price { font-size:.88rem; color:var(--brown-saddle); font-weight:600; }
+    .cart-item-remove { background:none; border:none; color:var(--rust); cursor:pointer; font-size:.95rem; padding:.25rem; opacity:.7; }
+    .cart-item-remove:hover { opacity:1; }
+    .cart-footer { border-top:2px solid var(--border-color); padding:1.1rem 1.5rem; background:var(--cream); }
+    .cart-total-row { display:flex; justify-content:space-between; margin-bottom:1rem; align-items:center; }
+    .cart-total-label { font-family:'Special Elite',monospace; font-size:.75rem; letter-spacing:1.5px; color:var(--text-mid); }
+    .cart-total-amount { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--brown-saddle); }
+    .checkout-btn { width:100%; padding:.82rem; background:var(--amber); color:var(--brown-dark); border:none; border-radius:2px; font-family:'Playfair Display',serif; font-size:.95rem; font-weight:700; cursor:pointer; letter-spacing:1px; transition:background .2s; }
+    .checkout-btn:hover { background:var(--amber-light); }
+    .checkout-btn:disabled { background:var(--border-color); cursor:not-allowed; color:var(--text-mid); }
+    .checkout-success { text-align:center; padding:2rem 1rem; }
+    .checkout-success .sicon { font-size:3.5rem; display:block; margin-bottom:.75rem; }
+    .checkout-success h4 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--brown-dark); margin-bottom:.5rem; }
+    .checkout-success p { color:var(--text-mid); font-style:italic; line-height:1.6; font-size:.95rem; }
+
+    /* ── FOOTER ── */
+    footer { background:var(--brown-dark); color:var(--parchment); padding:3rem 2rem 1.5rem; margin-top:4rem; border-top:3px solid var(--amber); }
+    .footer-inner { max-width:1200px; margin:0 auto; }
+    .footer-top { display:grid; grid-template-columns:2fr 1fr 1fr; gap:2rem; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid rgba(212,160,23,.25); }
+    .footer-brand-name { font-family:'Playfair Display',serif; font-size:1.35rem; color:var(--amber); font-weight:900; letter-spacing:2px; margin-bottom:.7rem; }
+    .footer-tagline { font-style:italic; color:var(--parchment); line-height:1.7; font-size:.95rem; }
+    .footer-col h4 { font-family:'Special Elite',monospace; font-size:.7rem; letter-spacing:3px; color:var(--amber); margin-bottom:.9rem; text-transform:uppercase; }
+    .footer-col ul { list-style:none; }
+    .footer-col ul li { margin-bottom:.45rem; }
+    .footer-col ul li a { color:var(--parchment); text-decoration:none; font-size:.92rem; transition:color .2s; }
+    .footer-col ul li a:hover { color:var(--amber); }
+    .footer-bottom { text-align:center; font-family:'Special Elite',monospace; font-size:.7rem; color:rgba(237,217,163,.4); letter-spacing:2px; padding-top:.5rem; }
+
+    /* ── TOAST ── */
+    .toast { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(100px); background:var(--brown-dark); color:var(--amber); padding:.7rem 1.5rem; border-radius:2px; border:1px solid var(--amber); font-family:'Playfair Display',serif; font-size:.88rem; z-index:300; transition:transform .3s; white-space:nowrap; box-shadow:0 4px 16px rgba(0,0,0,.3); }
+    .toast.show { transform:translateX(-50%) translateY(0); }
+
+    /* ── NO RESULTS ── */
+    .no-results { grid-column:1/-1; text-align:center; padding:4rem 1rem; color:var(--text-mid); }
+    .no-results-icon { font-size:2.8rem; margin-bottom:.75rem; }
+    .no-results h3 { font-family:'Playfair Display',serif; font-size:1.2rem; font-style:italic; margin-bottom:.4rem; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      .footer-top{grid-template-columns:1fr}
+      .header-inner{height:auto;padding:.7rem 0;gap:.75rem;flex-wrap:wrap}
+      .search-bar{order:3;width:100%;max-width:100%}
+      nav{gap:.85rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="18" stroke="#D4A017" stroke-width="1.8"/>
+        <circle cx="20" cy="20" r="12" stroke="#D4A017" stroke-width="1"/>
+        <circle cx="20" cy="20" r="6" stroke="#D4A017" stroke-width=".8"/>
+        <circle cx="20" cy="20" r="2.2" fill="#D4A017"/>
+        <line x1="2" y1="20" x2="38" y2="20" stroke="#D4A017" stroke-width=".5"/>
+        <line x1="20" y1="2" x2="20" y2="38" stroke="#D4A017" stroke-width=".5"/>
+      </svg>
+      <div class="logo-text">RETROVERSE<span>TIENDA VINTAGE DIGITAL</span></div>
+    </a>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Buscar piezas, décadas, categorías..." oninput="renderProducts()">
+    </div>
+    <nav>
+      <a href="#">Inicio</a>
+      <a href="#catalog" onclick="smoothTo('catalog')">Catálogo</a>
+      <a href="#">Nosotros</a>
+    </nav>
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Carrito
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-tag">✦ Est. 2024 · Argentina · Objetos con Historia ✦</p>
+  <h1>Donde el Pasado<br><em>Cobra Valor</em></h1>
+  <p class="hero-sub">Cámaras analógicas, vinilos, consolas clásicas y tecnología retro que merecen una segunda vida.</p>
+  <button class="hero-cta" onclick="smoothTo('catalog')">Explorar Catálogo →</button>
+  <div class="hero-divider"><span></span><span></span><span></span></div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-num">247</span><span class="stat-label">piezas únicas</span></div>
+    <div class="stat"><span class="stat-num">1940</span><span class="stat-label">año más antiguo</span></div>
+    <div class="stat"><span class="stat-num">6</span><span class="stat-label">categorías</span></div>
+    <div class="stat"><span class="stat-num">98%</span><span class="stat-label">satisfacción</span></div>
+  </div>
+</div>
+
+<!-- MAIN CATALOG -->
+<main id="catalog">
+  <h2 class="section-title">Catálogo de Piezas</h2>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="setFilter(this,'todos')">✦ Todos</button>
+    <button class="filter-btn" onclick="setFilter(this,'Fotografía')">📷 Fotografía</button>
+    <button class="filter-btn" onclick="setFilter(this,'Audio')">🎵 Audio</button>
+    <button class="filter-btn" onclick="setFilter(this,'Gaming')">🕹️ Gaming</button>
+    <button class="filter-btn" onclick="setFilter(this,'Tecnología')">⌨️ Tecnología</button>
+    <button class="filter-btn" onclick="setFilter(this,'Decoración')">🏺 Decoración</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid"></div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">RETROVERSE</div>
+        <p class="footer-tagline">"Cada pieza guarda la memoria de su tiempo.<br>Aquí, el pasado encuentra su próximo hogar."</p>
+      </div>
+      <div class="footer-col">
+        <h4>Categorías</h4>
+        <ul>
+          <li><a href="#">Fotografía Analógica</a></li>
+          <li><a href="#">Audio Vintage</a></li>
+          <li><a href="#">Gaming Retro</a></li>
+          <li><a href="#">Tecnología Clásica</a></li>
+          <li><a href="#">Decoración</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Cómo comprar</a></li>
+          <li><a href="#">Cómo vender</a></li>
+          <li><a href="#">Autenticidad</a></li>
+          <li><a href="#">Envíos</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 RETROVERSE — TIENDA VINTAGE DIGITAL — ARGENTINA</div>
+  </div>
+</footer>
+
+<!-- CART OVERLAY + SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>🛒 MI CARRITO</h3>
+    <button class="cart-close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🛒</div>
+      <p>Tu carrito está vacío.<br>Descubrí piezas únicas en el catálogo.</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">TOTAL</span>
+      <span class="cart-total-amount" id="cartTotal">$ 0</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="checkout()" disabled>Finalizar Compra</button>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="productModal">
+    <div class="modal-header">
+      <h3 id="modalCode">—</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-image" id="modalEmoji">📷</div>
+      <div class="modal-meta" id="modalMeta"></div>
+      <h2 class="modal-name" id="modalName">—</h2>
+      <p class="modal-desc" id="modalDesc">—</p>
+      <div class="modal-details" id="modalDetails"></div>
+      <div class="modal-purchase">
+        <div class="modal-price"><small>Precio</small><span id="modalPrice">$ —</span></div>
+        <button class="modal-add-btn" id="modalAddBtn" onclick="addFromModal()">Agregar al Carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ──
+const products = [
+  { id:1,  cod:"RV-CAM-001", nombre:"Leica M3 — Telémétrica Clásica",          cat:"Fotografía",  desc:"Icónica cámara telémétrica alemana de 35mm. Obturador de rendija metálica con velocidades de 1s a 1/1000s. Visor luminoso con encuadres para 50, 90 y 135mm. Una de las cámaras más influyentes de la historia de la fotografía, diseñada en Wetzlar en 1954.", anio:1957, deca:"1950s", estado:"Muy Bueno",      precio:485000, stock:1, excl:true,  emj:"📷" },
+  { id:2,  cod:"RV-AUD-001", nombre:"Pioneer PL-12D — Tocadiscos Belt Drive",   cat:"Audio",       desc:"Tocadiscos de tracción por correa del legendario fabricante japonés Pioneer. Plato de aluminio fundido, brazo recto de aleación ligera. Compatible con cabezales MM y MC. Diseño en nogal y negro. Restaurado y calibrado profesionalmente.", anio:1971, deca:"1970s", estado:"Muy Bueno",      precio:320000, stock:2, excl:false, emj:"🎵" },
+  { id:3,  cod:"RV-GAM-001", nombre:"Nintendo Game Boy — Edición Original DMG", cat:"Gaming",      desc:"La legendaria consola portátil que revolucionó los videojuegos. Pantalla LCD monocromática, procesador Z80 a 4.194 MHz. Incluye cartucho original de Tetris. Funciona perfectamente con pilas AA. Una pieza esencial para todo coleccionista de gaming.", anio:1989, deca:"1980s", estado:"Bueno",           precio:95000,  stock:3, excl:false, emj:"🕹️" },
+  { id:4,  cod:"RV-AUD-002", nombre:"Sony Walkman WM-2 — Cassette Estéreo",     cat:"Audio",       desc:"El segundo modelo de la icónica línea Walkman de Sony. Caja de aluminio anodizado plateado, reproducción de casetes en estéreo. Incluye auriculares originales MDR-5. Mecanismo revisado. Diseño ultrafino que definió una era cultural.", anio:1981, deca:"1980s", estado:"Muy Bueno",      precio:78000,  stock:1, excl:true,  emj:"🎧" },
+  { id:5,  cod:"RV-CAM-002", nombre:"Kodak Brownie Flash Six-20",               cat:"Fotografía",  desc:"Cámara de formato medio en baquelita negra, diseñada para películas 620. Lente Kodet de vidrio, flash sincronizado para bombillas de bola. Diseño rectangular icónico. Ideal para fotografía lomográfica y decoración vintage. En perfecto estado visual.", anio:1946, deca:"1940s", estado:"Bueno",           precio:45000,  stock:4, excl:false, emj:"🟫" },
+  { id:6,  cod:"RV-GAM-002", nombre:"Atari 2600 — Consola 8 bits Original",     cat:"Gaming",      desc:"La consola que popularizó los videojuegos domésticos a nivel mundial. Procesador MOS 6507, 128 bytes de RAM. Incluye 8 juegos en cartucho: Space Invaders, Pac-Man, Pitfall y más. Todos los cables originales. Totalmente funcional.", anio:1977, deca:"1970s", estado:"Bueno",           precio:180000, stock:1, excl:false, emj:"🎮" },
+  { id:7,  cod:"RV-TEC-001", nombre:"HP-35 — Primera Calculadora Científica",   cat:"Tecnología",  desc:"La histórica HP-35 fue la primera calculadora científica de bolsillo del mundo. Doce funciones trascendentales en ROM. Display de LED rojo con 10 dígitos. Carcasa de aluminio con detalles dorados. Adaptador AC incluido. Una pieza de historia de la computación.", anio:1972, deca:"1970s", estado:"Excelente",       precio:95000,  stock:1, excl:true,  emj:"🔢" },
+  { id:8,  cod:"RV-TEC-002", nombre:"Olivetti Lettera 32 — Máquina de Escribir",cat:"Tecnología",  desc:"La elegante portátil italiana por excelencia, diseñada por Marcello Nizzoli. Teclado en mayúscula y minúscula, tabulador, rodillo de caucho. Carcasa verde menta con detalles cromados. Estuche de viaje original. Cintas nuevas instaladas. Estado impecable.", anio:1963, deca:"1960s", estado:"Excelente",       precio:215000, stock:1, excl:true,  emj:"⌨️" },
+  { id:9,  cod:"RV-GAM-003", nombre:"Sega Mega Drive — Consola 16 bits",        cat:"Gaming",      desc:"La competidora del Super Nintendo que marcó una generación. Motorola 68000 a 7.6 MHz, 64KB RAM. Incluye control de 3 botones y los juegos Sonic the Hedgehog, Streets of Rage y Mortal Kombat. Cables AV y adaptador originales.", anio:1988, deca:"1980s", estado:"Muy Bueno",      precio:145000, stock:2, excl:false, emj:"🎯" },
+  { id:10, cod:"RV-CAM-003", nombre:"Polaroid SX-70 — Cámara Instantánea",      cat:"Fotografía",  desc:"La revolucionaria cámara SLR plegable de fotografía instantánea de Edwin Land. Sistema óptico de 4 elementos, exposición automática, enfoque manual. Carcasa de acero inoxidable y cuero marrón original. Compatible con película Polaroid 600. Restaurada.", anio:1972, deca:"1970s", estado:"Bueno",           precio:295000, stock:1, excl:true,  emj:"🔳" },
+  { id:11, cod:"RV-AUD-003", nombre:"Marantz 2230 — Receiver Estéreo Vintage",  cat:"Audio",       desc:"El más buscado receptor estéreo del mítico fabricante americano Marantz. 30W por canal RMS, sintonizador AM/FM de alta sensibilidad, ecualizador analógico. Dial iluminado con aguja. Paneles laterales de nogal. Revisado completamente. El sonido dorado de los 70.", anio:1972, deca:"1970s", estado:"Muy Bueno",      precio:420000, stock:1, excl:true,  emj:"📻" },
+  { id:12, cod:"RV-TEC-003", nombre:"Ericsson Cobra — Teléfono de Disco",       cat:"Tecnología",  desc:"El elegante teléfono de disco escandinavo con diseño revolucionario. Auricular moldeado en una pieza, disco numerado en cristal biselado. Color negro brillante con detalles cromados. Objeto de culto del diseño industrial del siglo XX. Conecta a líneas analógicas.", anio:1965, deca:"1960s", estado:"Muy Bueno",      precio:115000, stock:2, excl:false, emj:"📞" },
+  { id:13, cod:"RV-DEC-001", nombre:"Victrola VV-XI — Gramófono de Corneta",    cat:"Decoración",  desc:"Imponente gramófono de cuerda con corneta de latón original. Mecanismo de muelle revitatilado. Reproduce discos de 78 RPM. Gabinete de madera de caoba con incrustaciones de bronce. Una pieza excepcional que es a la vez objeto de arte y música funcional.", anio:1918, deca:"1910s", estado:"Aceptable",       precio:680000, stock:1, excl:true,  emj:"🎺" },
+  { id:14, cod:"RV-DEC-002", nombre:"Globe Terrestre Art Déco — Columbus",      cat:"Decoración",  desc:"Globo terráqueo de latón y cartapesta con base de madera lacada en negro. Meridiano de latón cromado. Cartografía política de los años 30 impresa en lino natural. Altura total 42cm. Pieza decorativa y coleccionable de gran elegancia.", anio:1935, deca:"1930s", estado:"Bueno",           precio:185000, stock:2, excl:false, emj:"🌍" },
+  { id:15, cod:"RV-AUD-004", nombre:"Technics SL-1200MK2 — Plato DJ Profesional",cat:"Audio",     desc:"El plato de tracción directa más icónico de la historia del DJ y la música electrónica. Motor cuarzo estable, control de pitch ±8%, brazo S-shape de aluminio. Estado de colección, revisado y lubricado. Una leyenda del audio profesional.", anio:1979, deca:"1970s", estado:"Muy Bueno",      precio:560000, stock:1, excl:true,  emj:"💿" },
+];
+
+let cart = [];
+let currentFilter = 'todos';
+let currentProduct = null;
+
+// ── UTILS ──
+const fmt = n => '$ ' + n.toLocaleString('es-AR');
+const condClass = c => 'cond-' + c.replace(/ /g,'-');
+
+// ── RENDER PRODUCTS ──
+function renderProducts() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const grid = document.getElementById('productsGrid');
+  const filtered = products.filter(p => {
+    const catOk = currentFilter === 'todos' || p.cat === currentFilter;
+    const qOk = !q || [p.nombre,p.cat,p.deca,p.desc,p.cod].some(f => f.toLowerCase().includes(q));
+    return catOk && qOk;
+  });
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="no-results"><div class="no-results-icon">🔍</div><h3>Sin resultados para esta búsqueda</h3><p>Probá otra categoría o término.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => {
+    const inCart = cart.some(c => c.id === p.id);
+    return `
+      <div class="product-card" onclick="openModal(${p.id})">
+        ${p.excl ? '<span class="badge-exclusive">★ EXCLUSIVO</span>' : ''}
+        <span class="badge-decade">${p.deca}</span>
+        <div class="product-image">${p.emj}</div>
+        <div class="product-info">
+          <div class="product-code">${p.cod} · ${p.anio}</div>
+          <div class="product-name">${p.nombre.split('—')[0].trim()}<br><small style="font-weight:400;font-size:.8rem;color:var(--text-mid)">${p.nombre.includes('—') ? p.nombre.split('—')[1].trim() : ''}</small></div>
+          <div class="product-condition"><span class="cond-dot ${condClass(p.estado)}"></span>${p.estado}</div>
+          <div class="product-footer">
+            <div><span class="product-price-label">precio</span><span class="product-price">${fmt(p.precio)}</span></div>
+            <button class="add-btn ${inCart?'added':''}" onclick="event.stopPropagation();addToCart(${p.id})">
+              ${inCart ? '✓ Agregado' : '+ Carrito'}
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── FILTER ──
+function setFilter(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = cat;
+  renderProducts();
+}
+
+// ── CART ──
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  if (cart.some(c => c.id === id)) { showToast(`"${p.nombre.split('—')[0].trim()}" ya está en el carrito`); return; }
+  cart.push({...p});
+  showToast(`✓ ${p.nombre.split('—')[0].trim()} agregado`);
+  updateCart(); renderProducts();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(c => c.id !== id);
+  updateCart(); renderProducts();
+}
+
+function updateCart() {
+  document.getElementById('cartBadge').textContent = cart.length;
+  document.getElementById('checkoutBtn').disabled = !cart.length;
+  const ci = document.getElementById('cartItems');
+  if (!cart.length) {
+    ci.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛒</div><p>Tu carrito está vacío.<br>Descubrí piezas únicas en el catálogo.</p></div>`;
+    document.getElementById('cartTotal').textContent = '$ 0';
+    return;
+  }
+  ci.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-emoji">${item.emj}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.nombre.split('—')[0].trim()}</div>
+        <div class="cart-item-price">${fmt(item.precio)}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${item.id})" title="Quitar">✕</button>
+    </div>`).join('');
+  document.getElementById('cartTotal').textContent = fmt(cart.reduce((s,i)=>s+i.precio,0));
+}
+
+function toggleCart() {
+  document.getElementById('cartSidebar').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+function checkout() {
+  const total = cart.reduce((s,i)=>s+i.precio,0);
+  const n = cart.length;
+  document.getElementById('cartItems').innerHTML = `
+    <div class="checkout-success">
+      <span class="sicon">✅</span>
+      <h4>¡Compra realizada!</h4>
+      <p>Gracias por tu pedido de ${n} pieza${n>1?'s':''} por ${fmt(total)}.<br><br>
+      <em>Recibirás un email de confirmación con los detalles de envío y autenticación.</em></p>
+    </div>`;
+  cart = [];
+  document.getElementById('cartBadge').textContent = '0';
+  document.getElementById('cartTotal').textContent = '$ 0';
+  document.getElementById('checkoutBtn').disabled = true;
+  renderProducts();
+}
+
+// ── MODAL ──
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  currentProduct = p;
+  document.getElementById('modalCode').textContent = p.cod;
+  document.getElementById('modalEmoji').textContent = p.emj;
+  document.getElementById('modalName').textContent = p.nombre;
+  document.getElementById('modalDesc').textContent = p.desc;
+  document.getElementById('modalPrice').textContent = fmt(p.precio);
+  document.getElementById('modalMeta').innerHTML =
+    `<span class="meta-tag">${p.cat}</span><span class="meta-tag">${p.deca}</span>${p.excl?'<span class="meta-tag">★ EXCLUSIVO</span>':''}`;
+  document.getElementById('modalDetails').innerHTML = [
+    ['AÑO APROX.', p.anio], ['ESTADO', p.estado], ['CATEGORÍA', p.cat],
+    ['CÓDIGO', p.cod], ['STOCK DISPONIBLE', `${p.stock} unidad${p.stock>1?'es':''}` ]
+  ].map(([l,v])=>`<div class="detail-row"><span class="detail-label">${l}</span><span class="detail-value">${v}</span></div>`).join('');
+  const inCart = cart.some(c => c.id === id);
+  const btn = document.getElementById('modalAddBtn');
+  btn.textContent = inCart ? '✓ Ya está en el Carrito' : 'Agregar al Carrito';
+  btn.style.background = inCart ? 'var(--brown-saddle)' : '';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function handleOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function addFromModal() {
+  if (!currentProduct) return;
+  addToCart(currentProduct.id);
+  const btn = document.getElementById('modalAddBtn');
+  btn.textContent = '✓ Ya está en el Carrito';
+  btn.style.background = 'var(--brown-saddle)';
+}
+
+// ── TOAST ──
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('show'), 2600);
+}
+
+// ── UTILS ──
+function smoothTo(id) { document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
+
+// ── INIT ──
+renderProducts();
+</script>
+</body>
+</html>
